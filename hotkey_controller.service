@@ -1,0 +1,14 @@
+[Unit]
+Description=Hotkey control panel service
+After=graphical.target
+
+[Service]
+Type=simple
+User=miata
+WorkingDirectory=/home/miata/scripts/
+ExecStart=/usr/bin/python3 /home/miata/scripts/dControllerPanel.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target
