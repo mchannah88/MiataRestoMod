@@ -38,6 +38,19 @@ def run_cmd(cmd):
         subprocess.Popen(cmd, shell=True)
     except Exception as e:
         print(f"Error running command: {e}")
+def skip_forward():
+    # 163 is the scan code for KEY_NEXTSONG
+    # This simulates a hardware media key press
+    subprocess.run(["xdotool", "key", "XF86AudioNext"])
+    
+def focus_window(window_name):
+    try:
+        # wmctrl -a looks for a window title matching the string
+        # -a switches to the desktop and focuses the window
+        subprocess.run(["wmctrl", "-a", window_name], check=True)
+        print(f"Successfully focused window: {window_name}")
+    except subprocess.CalledProcessError:
+        print(f"Could not find a window with the name: {window_name}")
 
 def focus_or_launch(window_name, launch_cmd):
     """
@@ -98,13 +111,10 @@ try:
             elif line == "MEDIA_PLAY_PAUSE":
                 run_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle")
             elif line == "MEDIA_NEXT":
-                skip_forward_dbus()
+                skip_forward()
                 
             elif line == "LAUNCH_OPENAUTO":
-                # --- LIVI Switching Logic ---
-                # Argument 1: The exact text that appears in the LIVI window title bar.
-                # Argument 2: The terminal command to launch the app if it's closed.
-                focus_or_launch("autoapp", "/home/pi/LIVI/LIVI7.AppImage") 
+                focus_window("autoapp") 
                 
             elif line == "LAUNCH_TUNERSTUDIO":
                 # The address below needs to be changed to the actual location for tunerstudio. The inputs to the function below are the same as for Launch_OpenAuto
