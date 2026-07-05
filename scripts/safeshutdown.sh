@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # GPIO Pin configuration (Modify these if using different pins)
-GPIO_IN=23
-GPIO_OUT=24
+GPIO_OUT=23
+GPIO_IN=24
 
 echo "$GPIO_IN" > /sys/class/gpio/export
 echo "in" > /sys/class/gpio/gpio$GPIO_IN/direction
