@@ -6,8 +6,9 @@ After=graphical.target
 Type=simple
 User=miata
 Environment=DISPLAY=:0
-
 Environment=XAUTHORITY=/home/miata/.Xauthority
+Environment=PULSE_SERVER=unix:/run/user/1000/pulse/native
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 WorkingDirectory=/home/miata/scripts/
 ExecStart=/usr/bin/python3 /home/miata/scripts/ControllerPanel.py
 Restart=on-failure
