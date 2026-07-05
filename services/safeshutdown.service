@@ -1,0 +1,11 @@
+[Unit]
+Description=Mausberry Safe Shutdown Monitor
+After=multi-user.target
+
+[Service]
+ExecStart=/home/pi/scripts/shutdown_monitor.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
