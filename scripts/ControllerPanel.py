@@ -91,9 +91,9 @@ try:
             print(f"Received: {line}")
             
             if line == "VOL_UP":
-                run_cmd("amixer set Master 5%+")
+                run_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%")
             elif line == "VOL_DOWN":
-                run_cmd("amixer set Master 5%-")
+                run_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%")
             elif line == "MEDIA_PLAY_PAUSE":
                 run_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle")
             elif line == "MEDIA_NEXT":
