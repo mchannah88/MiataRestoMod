@@ -3,6 +3,7 @@ import serial.tools.list_ports
 import subprocess
 import time
 import dbus
+import subprocess
 
 # Adafruit Huzzah32 (CP2104) Hardware IDs
 TARGET_VID = 0x1a86
@@ -91,9 +92,9 @@ try:
             print(f"Received: {line}")
             
             if line == "VOL_UP":
-                run_cmd("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+                run_cmd("amixer -q sset Master 5%+")
             elif line == "VOL_DOWN":
-                run_cmd("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+                run_cmd("amixer -q sset Master 5%-")
             elif line == "MEDIA_PLAY_PAUSE":
                 run_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle")
             elif line == "MEDIA_NEXT":
