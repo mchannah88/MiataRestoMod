@@ -2,6 +2,7 @@ import serial
 import serial.tools.list_ports
 import subprocess
 import time
+import dbus
 
 # Adafruit Huzzah32 (CP2104) Hardware IDs
 TARGET_VID = 0x1a86
@@ -14,6 +15,14 @@ MIN_BRIGHT = "15"
 MAX_BRIGHT = "255"
 brightness_high = True
 
+def skip_forward_dbus():
+    bus = dbus.SessionBus()
+    # This finds players that support the MPRIS interface
+    for name in bus.list_names():
+        if name.startswith('org.mpris.MediaPlayer2.'):
+            player = bus.get_object(name, '/org/mpris/MediaPlayer2')
+            player.Next(dbus_interface='org.mpris.MediaPlayer2.Player')
+            
 def find_esp32():
     """Scans all USB ports and returns the path to the ESP32."""
     ports = serial.tools.list_ports.comports()
@@ -86,15 +95,15 @@ try:
             elif line == "VOL_DOWN":
                 run_cmd("amixer set Master 5%-")
             elif line == "MEDIA_PLAY_PAUSE":
-                run_cmd("playerctl play-pause")
+                run_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle")
             elif line == "MEDIA_NEXT":
-                run_cmd("playerctl next")
+                skip_forward_dbus()
                 
             elif line == "LAUNCH_OPENAUTO":
                 # --- LIVI Switching Logic ---
                 # Argument 1: The exact text that appears in the LIVI window title bar.
                 # Argument 2: The terminal command to launch the app if it's closed.
-                focus_or_launch("LIVI", "/home/miata/LIVI/LIVI7.AppImage") 
+                focus_or_launch("autoapp", "/home/miata/LIVI/LIVI7.AppImage") 
                 
             elif line == "LAUNCH_TUNERSTUDIO":
                 # The address below needs to be changed to the actual location for tunerstudio. The inputs to the function below are the same as for Launch_OpenAuto
