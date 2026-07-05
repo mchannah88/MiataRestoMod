@@ -103,11 +103,11 @@ try:
                 # --- LIVI Switching Logic ---
                 # Argument 1: The exact text that appears in the LIVI window title bar.
                 # Argument 2: The terminal command to launch the app if it's closed.
-                focus_or_launch("autoapp", "/home/miata/LIVI/LIVI7.AppImage") 
+                focus_or_launch("autoapp", "/home/pi/LIVI/LIVI7.AppImage") 
                 
             elif line == "LAUNCH_TUNERSTUDIO":
                 # The address below needs to be changed to the actual location for tunerstudio. The inputs to the function below are the same as for Launch_OpenAuto
-                focus_or_launch("TunerStudio", "/home/miata/TunerStudioMS/TunerStudio.sh")
+                focus_or_launch("TunerStudio", "/home/pi/TunerStudioMS/TunerStudio.sh")
                 
             elif line == "TOGGLE_BRIGHTNESS":
                 try:
